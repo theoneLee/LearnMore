@@ -1,8 +1,10 @@
 package LearnMore.controller;
 
 import LearnMore.entity.Course;
+import LearnMore.entity.CourseContent;
 import LearnMore.entity.Question;
 import LearnMore.entity.Response;
+import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +22,21 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping(value = "/")
+    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @IgnoreSecurity
     public Response getAllCourse(){
-        List<Course> list=courseService.getAllCourse();//这里的课程
-
+        List<Course> list=courseService.getAllCourse();
+        return new Response().success(list);
+    }
+    @RequestMapping(value = "/{id}",method =RequestMethod.GET)
+    @IgnoreSecurity
+    public Response getCourseContentById(@PathVariable(name = "id")Integer id){
+        Course course=courseService.getCourseById(id);
+        return new Response().success(course);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.POST)//这里要验证token和permission
+
+    @RequestMapping(value = "/save",method = RequestMethod.POST)//这里要验证token和permission
     public Response getFormData(@RequestParam("courseName")String courseName,
                                 @RequestParam("teacherTeam")String teacherTeam,
                                 @RequestParam("courseIntroduction")String courseIntroduction,
@@ -43,10 +53,50 @@ public class CourseController {
         course.setCourseExamJson(examJson);
 
         courseService.save(course);
+        return new Response().success();
     }
 
+    /**
+     * 执行更新Course操作
+     * 在提交这个表单前要先把数据事先取出来并填充到表单中供人检验
+     * @param courseName
+     * @param teacherTeam
+     * @param courseIntroduction
+     * @param courseOutline
+     * @param exam
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/update/{id}",method = RequestMethod.POST)//这里要验证token和permission
+    public Response updateFormData(@RequestParam("courseName")String courseName,
+                                @RequestParam("teacherTeam")String teacherTeam,
+                                @RequestParam("courseIntroduction")String courseIntroduction,
+                                @RequestParam("courseOutline")String courseOutline,
+                                @RequestParam("exam") MultipartFile exam,
+                                @PathVariable(name = "id")Integer id){//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
+        List<Question> examJson=courseService.getJson(exam);
+        Course course=courseService.getCourseById(id);
+        course.setCourseName(courseName);
+        course.setTeacherTeam(teacherTeam);
+        course.setCourseIntroduction(courseIntroduction);
+        course.setCourseOutline(courseOutline);
+        course.setCourseExamJson(examJson);
 
+        courseService.save(course);
+        return new Response().success();
+    }
 
+//    @RequestMapping(value ="/update/{id}",method = RequestMethod.GET)
+//    public Response getFormData(@PathVariable(name = "id")Integer id){
+//        Course course=courseService.getCourseById(id);
+//        return new Response().success(course);
+//    }
+
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.GET)
+    public Response deleteCourseById(@PathVariable(name = "id")Integer id){
+        courseService.deleteCourseById(id);
+        return new Response().success();
+    }
 
 
 }
