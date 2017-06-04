@@ -1,6 +1,7 @@
 package LearnMore.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 课程内容实体
@@ -15,13 +16,11 @@ public class CourseContent {
     private String courseContentName;//该视频内容名
     private String courseVideoLink;//保存教学视频的路径
 
-    private String courseHomeWorkJson;//将上传的txt作业题目，解析成json然后存储在这里
-
-    private String courseHomeWorkAnswerJson;//将上传的txt作业答案，解析成json然后存储在这里
-
+    @OneToMany(mappedBy = "course_content",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<Question> courseHomeWorkJson;//将上传的txt作业题目，解析成json然后存储在这里
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH},fetch = FetchType.EAGER,optional = false)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "course_id")
     private Course course;
 
@@ -58,19 +57,11 @@ public class CourseContent {
         this.courseVideoLink = courseVideoLink;
     }
 
-    public String getCourseHomeWorkJson() {
+    public List<Question> getCourseHomeWorkJson() {
         return courseHomeWorkJson;
     }
 
-    public void setCourseHomeWorkJson(String courseHomeWorkJson) {
+    public void setCourseHomeWorkJson(List<Question> courseHomeWorkJson) {
         this.courseHomeWorkJson = courseHomeWorkJson;
-    }
-
-    public String getCourseHomeWorkAnswerJson() {
-        return courseHomeWorkAnswerJson;
-    }
-
-    public void setCourseHomeWorkAnswerJson(String courseHomeWorkAnswerJson) {
-        this.courseHomeWorkAnswerJson = courseHomeWorkAnswerJson;
     }
 }

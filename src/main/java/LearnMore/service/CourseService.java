@@ -1,6 +1,7 @@
 package LearnMore.service;
 
 import LearnMore.entity.Course;
+import LearnMore.entity.Question;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface CourseService {
 
-    String getJson(MultipartFile data);//从上传的文件中将里面的数据转化为json
+    List<Question> getJson(MultipartFile data);//从上传的文件中将里面的数据转化为json
 
 
     String getLinkByVideo(MultipartFile data);//获取视频的保存路径

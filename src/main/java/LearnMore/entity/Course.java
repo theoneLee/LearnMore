@@ -1,7 +1,5 @@
 package LearnMore.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,26 +18,18 @@ public class Course {
     private String courseIntroduction;//课程介绍
     private String courseOutline;//教学大纲
 
-    //todo 这种已经是json的字段在返回时怎么处理？要不选择自己手工拼接json？只需要new Response().success(string);或者这个字段根据Question作为一个队列
-    private String courseExamAnswerJson;//将上传的txt考试答案，解析成json然后存储在这里
-    private String courseExamJson;//将上传的txt考试题目，解析成json然后存储在这里
+    @OneToMany(mappedBy = "course_exam",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<Question> courseExamJson;//将上传的txt考试题目，里面的每一道题解析成Question，然后存储在这里
 
     @OneToMany(mappedBy = "course",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<CourseContent> courseContentList=new ArrayList<>();
 
-    public String getCourseExamAnswerJson() {
-        return courseExamAnswerJson;
-    }
 
-    public void setCourseExamAnswerJson(String courseExamAnswerJson) {
-        this.courseExamAnswerJson = courseExamAnswerJson;
-    }
-
-    public String getCourseExamJson() {
+    public List<Question> getCourseExamJson() {
         return courseExamJson;
     }
 
-    public void setCourseExamJson(String courseExamJson) {
+    public void setCourseExamJson(List<Question> courseExamJson) {
         this.courseExamJson = courseExamJson;
     }
 

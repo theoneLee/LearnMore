@@ -2,11 +2,14 @@ package LearnMore.controller;
 
 import LearnMore.entity.Course;
 import LearnMore.entity.CourseContent;
+import LearnMore.entity.Question;
 import LearnMore.entity.Response;
 import LearnMore.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Created by Lee on 2017/6/4 0004.
@@ -19,20 +22,18 @@ public class CourseContentController {
 
     @RequestMapping(value = "/",method = RequestMethod.POST)
     public Response addCourseContent(@RequestParam("courseContentName")String courseContentName,@RequestParam("courseName")String courseName,
-                                     @RequestParam("video") MultipartFile video,@RequestParam("homework") MultipartFile homework,
-                                     @RequestParam("homeworkAnswer") MultipartFile homeworkAnswer){
+                                     @RequestParam("video") MultipartFile video,@RequestParam("homework") MultipartFile homework
+                                     ){
         //接受表单的字段，还有接受表单包含的文件(第一个是视频内容，第二个是作业)
         //字段，文件通过Question模版转化为json，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
         //文件格式要求：一行题目一行选项（以换行符为准），空行不记
-        String homeworkJson=courseService.getJson(homework);
-        String homeworkAnswerJson=courseService.getJson(homeworkAnswer);
+        List<Question> homeworkJson=courseService.getJson(homework);
         String videoLink=courseService.getLinkByVideo(video);
 
         CourseContent courseContent=new CourseContent();//封装
         courseContent.setCourseContentName(courseContentName);
         courseContent.setCourseVideoLink(videoLink);
         courseContent.setCourseHomeWorkJson(homeworkJson);
-        courseContent.setCourseHomeWorkAnswerJson(homeworkAnswerJson);
 
         Course course=courseService.getCourseByName(courseName);
 
