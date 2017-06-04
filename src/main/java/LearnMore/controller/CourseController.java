@@ -1,7 +1,6 @@
 package LearnMore.controller;
 
 import LearnMore.entity.Course;
-import LearnMore.entity.CourseContent;
 import LearnMore.entity.Question;
 import LearnMore.entity.Response;
 import LearnMore.security.IgnoreSecurity;

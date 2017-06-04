@@ -23,8 +23,7 @@ public class CourseContentController {
 
     @RequestMapping(value = "/",method = RequestMethod.POST)
     public Response addCourseContent(@RequestParam("courseContentName")String courseContentName,@RequestParam("courseName")String courseName,
-                                     @RequestParam("video") MultipartFile video,@RequestParam("homework") MultipartFile homework
-                                     ){
+                                     @RequestParam("video") MultipartFile video,@RequestParam("homework") MultipartFile homework){
         //接受表单的字段，还有接受表单包含的文件(第一个是视频内容，第二个是作业)
         //字段，文件的每一道题目通过Question模版转化，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
         //文件格式要求：一行题目一行选项（以换行符为准），空行不记
@@ -63,5 +62,6 @@ public class CourseContentController {
         courseService.deleteCourseContentById(id);
         return new Response().success();
     }
+
 
 }
