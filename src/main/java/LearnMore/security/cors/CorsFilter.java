@@ -23,7 +23,7 @@ import java.util.List;
                 @WebInitParam(name = "allowOrigin",value = "*"),
                 @WebInitParam(name = "allowMethods",value = "GET,POST,PUT,DELETE,OPTIONS"),
                 @WebInitParam(name = "allowCredentials",value = "true"),
-                @WebInitParam(name = "allowHeaders",value = "Content-Type,X-Token")
+                @WebInitParam(name = "allowHeaders",value = "Content-Type,X-Token,X-Permission")
         }
 )
 public class CorsFilter implements Filter {
