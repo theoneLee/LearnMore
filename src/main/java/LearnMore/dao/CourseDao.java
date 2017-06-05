@@ -18,5 +18,7 @@ public interface CourseDao extends JpaRepository<Course,Long>{
     @Query("select c from Course c join fetch c.courseExamJson where c.courseName=?1")
     Course findByCourseNameFetchExam(String name);
 
+    Course findById(Integer id);
 
+    void deleteById(Integer id);
 }

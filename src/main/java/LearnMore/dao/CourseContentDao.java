@@ -19,4 +19,6 @@ public interface CourseContentDao extends JpaRepository<CourseContent,Long>{
      */
     @Query("select c from CourseContent c where c.course.courseName=?1")
     CourseContent findByCourseQuery(String courseName);
+
+    void deleteById(Integer id);
 }

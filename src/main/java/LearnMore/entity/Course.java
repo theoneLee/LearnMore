@@ -18,7 +18,7 @@ public class Course {
     private String courseIntroduction;//课程介绍
     private String courseOutline;//教学大纲
 
-    @OneToMany(mappedBy = "course_exam",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<Question> courseExamJson;//将上传的txt考试题目，里面的每一道题解析成Question，然后存储在这里
 
     @OneToMany(mappedBy = "course",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)

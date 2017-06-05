@@ -16,7 +16,7 @@ public class CourseContent {
     private String courseContentName;//该视频内容名
     private String courseVideoLink;//保存教学视频的路径
 
-    @OneToMany(mappedBy = "course_content",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
     private List<Question> courseHomeWorkJson;//将上传的txt作业题目，解析成json然后存储在这里
 
 

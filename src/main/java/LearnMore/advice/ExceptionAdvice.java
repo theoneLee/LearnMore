@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.IOException;
+
 /**
  * 全局的异常处理切面类，用它来统一处理所有的异常行为
  * Created by Lee on 2017/5/7 0007.
@@ -90,4 +92,14 @@ public class ExceptionAdvice {
         e.printStackTrace();
         return new Response().failure(e.getMessage());
     }
+    /**
+     * 500 - Internal Server Error IO异常
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(IOException.class)
+    public Response handleException(IOException e) {
+        e.printStackTrace();
+        return new Response().failure(e.getMessage());
+    }
+
 }
