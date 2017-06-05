@@ -96,7 +96,7 @@ public class SecurityAspect {
             String message = String.format("permission [%s] is invalid", permission);
             throw new TokenException(message);
         }
-
+        System.out.println("CheckPermission is done");
         // 调用目标方法
         return pjp.proceed();
     }

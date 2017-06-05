@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<form onsubmit="return false" enctype="multipart/form-data" method="post">
+			<input type="text" name="courseName" value="" />
+			<input type="text" name="teacherTeam" value="" />
+			<input type="text" name="courseIntroduction" value="" />
+			<input type="text" name="courseOutline" value="" />
+			<input type="file" name="exam" value="" />
+			<button id="tj">提交</button>
+		</form>
+		
+		<form action="/user/login" method="post">
+			<input type="text" name="username" value="" />
+			<input type="text" name="password" value="" />
+			<button type="submit">提交</button>
+		</form>
+		
+	</body>
+	<script type="text/javascript" src="../js/jquery-2.1.4.min.js" ></script>
+	<script>
+		$("#tj").click(function(){
+			var formData = new FormData();
+			var courseName = $("input[name='courseName']").val();
+			var teacherTeam = $("input[name='teacherTeam']").val();
+			var courseIntroduction = $("input[name='courseIntroduction']").val();
+			var courseOutline = $("input[name='courseOutline']").val();
+			
+			formData.append("exam",$("input[name='exam']")[0].files[0]);
+			formData.append("courseName",courseName);
+			formData.append("teacherTeam",teacherTeam);
+			formData.append("courseIntroduction",courseIntroduction);
+			formData.append("courseOutline",courseOutline);
+			
+			$.ajax({
+				type:"post",
+				url:"/course/save",
+				async:true,
+				data : formData, 
+				// 告诉jQuery不要去处理发送的数据
+				processData : false,
+                contentType: false,
+				success:function(res){
+					if(res.status===0){
+						console.log("yes");
+					}
+				},
+				error:function(){
+					console.log("error");
+				}
+			});
+		});
+		
+	</script>
+</html>
