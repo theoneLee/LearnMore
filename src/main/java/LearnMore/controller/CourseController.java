@@ -3,6 +3,7 @@ package LearnMore.controller;
 import LearnMore.entity.Course;
 import LearnMore.entity.Question;
 import LearnMore.entity.Response;
+import LearnMore.security.CheckPermission;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class CourseController {
 
 
     @RequestMapping(value = "/course/save",method = RequestMethod.POST)//这里要验证token和permission
+    @CheckPermission
     public Response getFormData(@RequestParam("courseName")String courseName,
                                 @RequestParam("teacherTeam")String teacherTeam,
                                 @RequestParam("courseIntroduction")String courseIntroduction,
@@ -68,6 +70,7 @@ public class CourseController {
      * @return
      */
     @RequestMapping(value = "/course/update/{id}",method = RequestMethod.POST)//这里要验证token和permission
+    @CheckPermission
     public Response updateFormData(@RequestParam("courseName")String courseName,
                                 @RequestParam("teacherTeam")String teacherTeam,
                                 @RequestParam("courseIntroduction")String courseIntroduction,
@@ -93,6 +96,7 @@ public class CourseController {
 //    }
 
     @RequestMapping(value = "/course/delete/{id}",method = RequestMethod.GET)
+    @CheckPermission
     public Response deleteCourseById(@PathVariable(name = "id")Integer id){
         courseService.deleteCourseById(id);
         return new Response().success();

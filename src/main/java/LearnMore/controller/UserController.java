@@ -5,12 +5,15 @@ import LearnMore.entity.Response;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.security.TokenManager;
 import LearnMore.security.web.WebContext;
+import LearnMore.service.UserService;
+import LearnMore.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -46,11 +49,34 @@ public class UserController {//todo 登录，注销，修改密码，注册
         return new Response().success();
     }
 
+    /**
+     * 登录，成功时加入token（是管理员还需要加入permission）
+     * @param user
+     * @param httpServletResponse
+     * @return
+     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @IgnoreSecurity
     public Response login(@RequestBody CommonUser user, HttpServletResponse httpServletResponse){
         CommonUser checkedUser=userService.checkUserPassword(user);
+        if (checkedUser!=null){
+            String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie
+            Cookie tokenCookie=new Cookie(DEFAULT_TOKEN_NAME,token);
+            tokenCookie.setMaxAge(-1);//关闭浏览器即清除Cookie
+            httpServletResponse.addCookie(tokenCookie);
 
+            String permission=checkedUser.getPermission();//加入permission到cookie
+            if (StringUtil.isNotEmpty(permission)){
+                Cookie permissionCookie=new Cookie(DEFAULT_PERMISSION_NAME,permission);
+                permissionCookie.setMaxAge(-1);
+                httpServletResponse.addCookie(permissionCookie);//permission写入cookie
+            }
+            checkedUser.setPermission(null);
+            return new Response().success(checkedUser);//todo 注意：之后客户端每次请求都将cookie中的token作为请求头，发送到服务端
+        }
+        return new Response().failure("login_failure");
     }
+
+
 
 }

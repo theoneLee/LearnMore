@@ -4,6 +4,7 @@ import LearnMore.entity.Course;
 import LearnMore.entity.CourseContent;
 import LearnMore.entity.Question;
 import LearnMore.entity.Response;
+import LearnMore.security.CheckPermission;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class CourseContentController {
     private CourseService courseService;
 
     @RequestMapping(value = "/courseContent/save",method = RequestMethod.POST)
+    @CheckPermission
     public Response addCourseContent(@RequestParam("courseContentName")String courseContentName,@RequestParam("courseName")String courseName,
                                      @RequestParam("video") MultipartFile video,@RequestParam("homework") MultipartFile homework)throws IOException {
         //接受表单的字段，还有接受表单包含的文件(第一个是视频内容，第二个是作业)
@@ -60,6 +62,7 @@ public class CourseContentController {
     }
 
     @RequestMapping(value = "/courseContent/delete/{id}",method = RequestMethod.GET)
+    @CheckPermission
     public Response deleteCourseContentById(@PathVariable(name = "id")Integer id){
         courseService.deleteCourseContentById(id);
         return new Response().success();

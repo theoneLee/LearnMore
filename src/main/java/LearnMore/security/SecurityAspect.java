@@ -77,6 +77,12 @@ public class SecurityAspect {
 
     }
 
+    /**
+     * 加入@CheckPermission注解的会判断permission
+     * @param pjp
+     * @return
+     * @throws Throwable
+     */
     @Around("checkPermissionAnnotationPointCut()")
     public Object executeCheckPermission(ProceedingJoinPoint pjp) throws Throwable {
         // 从切点上获取目标方法

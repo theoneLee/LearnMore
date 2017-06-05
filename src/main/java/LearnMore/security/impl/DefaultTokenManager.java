@@ -49,7 +49,7 @@ public class DefaultTokenManager implements TokenManager {
 
     @Override
     public boolean checkPermission(String permission) {//进来的合法参数可以为"","NEWS_MANAGER","NEWS_ADMIN"
-        if (permission.equals(COURSE_ADMIN)){
+        if (permission!=null&&permission.equals(COURSE_ADMIN)){
             return true;
         }
         return false;
