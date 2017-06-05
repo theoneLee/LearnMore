@@ -84,15 +84,6 @@ public class ExceptionAdvice {
     }
 
     /**
-     * 500 - Internal Server Error
-     */
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public Response handleException(Exception e) {
-        e.printStackTrace();
-        return new Response().failure(e.getMessage());
-    }
-    /**
      * 500 - Internal Server Error IO异常
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -101,5 +92,15 @@ public class ExceptionAdvice {
         e.printStackTrace();
         return new Response().failure(e.getMessage());
     }
+    /**
+     * 500 - Internal Server Error
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public Response handleException(Exception e) {
+        e.printStackTrace();
+        return new Response().failure(e.getMessage());
+    }
+
 
 }

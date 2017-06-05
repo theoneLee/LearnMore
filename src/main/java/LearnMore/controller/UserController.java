@@ -8,10 +8,7 @@ import LearnMore.security.web.WebContext;
 import LearnMore.service.UserService;
 import LearnMore.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -51,13 +48,15 @@ public class UserController {//todo 登录，注销，修改密码，注册
 
     /**
      * 登录，成功时加入token（是管理员还需要加入permission）
-     * @param user
      * @param httpServletResponse
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @IgnoreSecurity
-    public Response login(@RequestBody CommonUser user, HttpServletResponse httpServletResponse){
+    public Response login(@RequestParam("username")String username,@RequestParam("password")String password, HttpServletResponse httpServletResponse){
+        CommonUser user=new CommonUser();
+        user.setUsername(username);
+        user.setPassword(password);
         CommonUser checkedUser=userService.checkUserPassword(user);
         if (checkedUser!=null){
             String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie
