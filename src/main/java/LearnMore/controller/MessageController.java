@@ -1,9 +1,6 @@
 package LearnMore.controller;
 
-import LearnMore.entity.CommonUser;
-import LearnMore.entity.Message;
-import LearnMore.entity.MessageQueue;
-import LearnMore.entity.Response;
+import LearnMore.entity.*;
 import LearnMore.service.MessageService;
 import LearnMore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +49,7 @@ public class MessageController {
 
     @RequestMapping(value = "/flag",method = RequestMethod.GET)
     public Response getFlagList(@RequestParam(name = "receiver")String receiverName){
-        List<String> flagList=messageService.getFlagList(receiverName);
+        List<Flag> flagList=messageService.getFlagList(receiverName);
         return new Response().success(flagList);
     }
 

@@ -1,5 +1,6 @@
 package LearnMore.service;
 
+import LearnMore.entity.Flag;
 import LearnMore.entity.Message;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface MessageService {
 
     void sendMessage(String senderName,String receiveName,String content);
 
-    List<String> getFlagList(String receiverName);
+    List<Flag> getFlagList(String receiverName);
 
     List<Message> getMessageList(String senderName, String receiverName);
 }

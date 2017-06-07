@@ -13,11 +13,11 @@ public class MessageQueue {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<Message> messageList=new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
-    private List<String> flagList=new ArrayList<>();
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<Flag> flagList=new ArrayList<>();
 
     @OneToOne(fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "user_id")
@@ -39,11 +39,11 @@ public class MessageQueue {
         this.messageList = messageList;
     }
 
-    public List<String> getFlagList() {
+    public List<Flag> getFlagList() {
         return flagList;
     }
 
-    public void setFlagList(List<String> flagList) {
+    public void setFlagList(List<Flag> flagList) {
         this.flagList = flagList;
     }
 
