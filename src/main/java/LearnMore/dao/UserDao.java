@@ -15,4 +15,7 @@ public interface UserDao extends JpaRepository<CommonUser,Long>{
     @Query("select c from CommonUser c join fetch c.courseDetailList where c.username=?1")
     CommonUser findByUsernameFetchCourseDetail(String username);
 
+
+    @Query("select c from CommonUser c join fetch c.messageQueue where c.username=?1")
+    CommonUser findByUsernameFetchMessageQueue(String username);
 }
