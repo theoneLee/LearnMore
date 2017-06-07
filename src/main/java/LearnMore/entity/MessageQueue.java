@@ -54,4 +54,5 @@ public class MessageQueue {
     public void setCommonUser(CommonUser commonUser) {
         this.commonUser = commonUser;
     }
+
 }

@@ -69,4 +69,5 @@ public class CommonUser {
     public void setMessageQueue(MessageQueue messageQueue) {
         this.messageQueue = messageQueue;
     }
+
 }
