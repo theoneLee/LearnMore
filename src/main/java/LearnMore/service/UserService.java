@@ -2,8 +2,11 @@ package LearnMore.service;
 
 import LearnMore.dao.UserDao;
 import LearnMore.entity.CommonUser;
+import LearnMore.entity.CourseDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Lee on 2017/6/5 0005.
@@ -13,6 +16,7 @@ public class UserService {
 
     @Autowired
     private UserDao userDao;
+
 
 
     public void signIn(CommonUser user) {
@@ -32,4 +36,17 @@ public class UserService {
     }
 
 
+    public List<CourseDetail> getCourseDetailList(String username) {
+        CommonUser user=userDao.findByUsernameFetchCourseDetail(username);
+        return user.getCourseDetailList();
+    }
+
+    public void addCourseDetail(String username, String courseName) {
+        CommonUser user=userDao.findByUsernameFetchCourseDetail(username);
+        CourseDetail courseDetail=new CourseDetail();
+        courseDetail.setCourseName(courseName);
+        courseDetail.setScore("未考试");
+        user.getCourseDetailList().add(courseDetail);
+        userDao.save(user);
+    }
 }
