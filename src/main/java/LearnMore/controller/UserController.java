@@ -1,6 +1,7 @@
 package LearnMore.controller;
 
 import LearnMore.entity.CommonUser;
+import LearnMore.entity.CourseDetail;
 import LearnMore.entity.Response;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.security.TokenManager;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
+ *
  * Created by Lee on 2017/6/5 0005.
  */
 @RestController
@@ -76,6 +79,27 @@ public class UserController {//todo 登录，注销，修改密码，注册
         return new Response().failure("login_failure");
     }
 
+    /**
+     * 用户获取课程信息
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "/courseDetailList",method = RequestMethod.GET)
+    public Response getCourseDetailList(@RequestParam(name = "userName")String username){
+        List<CourseDetail> list=userService.getCourseDetailList(username);
+        return new Response().success(list);
+    }
 
+    /**
+     * 学生选择课程
+     * @param username
+     * @param courseName
+     * @return
+     */
+    @RequestMapping(value = "/courseDetail",method = RequestMethod.POST)
+    public Response addCourseDetail(@RequestParam(name = "userName")String username,@RequestParam(name = "courseName")String courseName){
+        userService.addCourseDetail(username,courseName);
+        return new Response().success();
+    }
 
 }

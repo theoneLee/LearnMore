@@ -1,8 +1,8 @@
 package LearnMore.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lee on 2017/6/3 0003.
@@ -15,6 +15,9 @@ public class CommonUser {
     private String username;
     private String password;
     private String permission;
+
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<CourseDetail> courseDetailList=new ArrayList<>();//todo 该字段用来给学生选择课程，以及登记考试后的课程分数
 
     public Integer getId() {
         return id;
@@ -46,5 +49,13 @@ public class CommonUser {
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    public List<CourseDetail> getCourseDetailList() {
+        return courseDetailList;
+    }
+
+    public void setCourseDetailList(List<CourseDetail> courseDetailList) {
+        this.courseDetailList = courseDetailList;
     }
 }
