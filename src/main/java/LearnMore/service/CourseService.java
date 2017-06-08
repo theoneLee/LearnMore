@@ -3,6 +3,7 @@ package LearnMore.service;
 import LearnMore.entity.Course;
 import LearnMore.entity.CourseContent;
 import LearnMore.entity.Question;
+import LearnMore.entity.wrapper.ExamParamWrapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,4 +36,6 @@ public interface CourseService {
     Course getCourseById(Integer id);
 
     void deleteCourseById(Integer id);
+
+    String checkExamAndGetPoint(ExamParamWrapper wrapper);
 }

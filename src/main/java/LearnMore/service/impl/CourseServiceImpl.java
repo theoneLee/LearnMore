@@ -5,6 +5,7 @@ import LearnMore.dao.CourseDao;
 import LearnMore.entity.Course;
 import LearnMore.entity.CourseContent;
 import LearnMore.entity.Question;
+import LearnMore.entity.wrapper.ExamParamWrapper;
 import LearnMore.service.CourseService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,5 +118,21 @@ public class CourseServiceImpl implements CourseService{
         courseDao.deleteById(id);
     }
 
+    @Override
+    public String checkExamAndGetPoint(ExamParamWrapper wrapper) {
+        Course course=courseDao.findByCourseNameFetchExam(wrapper.getCourseName());
+        List<Question> trueList=course.getCourseExamJson();
+        List<String> optionList=wrapper.getOptionList();
+        double flag=0;
+        for (int i = 0; i < trueList.size(); i++) {
+            Question trueQuestion=trueList.get(i);
+            String option=optionList.get(i);
+            if (option.equals(trueQuestion.getAnswer())){
+                flag=flag+1;
+            }
+        }
+        double score=flag/trueList.size();
+        return String.valueOf(score);
 
+    }
 }
