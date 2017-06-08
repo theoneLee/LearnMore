@@ -3,19 +3,18 @@ package LearnMore.entity.wrapper;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * todo
  * 包装类。
  * 用于接受前端的数据然后进行包装后转化为持久化类
  * Created by Lee on 2017/6/1 0001.
  */
 public class CourseWrapper {
 
-    private String courseName;//课程名称
-    private String teacherTeam;//教学团队
-    private String courseIntroduction;//课程介绍
-    private String courseOutline;//教学大纲
+    private String courseName;
+    private String teacherTeam;
+    private String courseIntroduction;
+    private String courseOutline;
+    private MultipartFile exam;
 
-    //private MultipartFile[] files;
 
     public String getCourseName() {
         return courseName;
@@ -49,4 +48,11 @@ public class CourseWrapper {
         this.courseOutline = courseOutline;
     }
 
+    public MultipartFile getExam() {
+        return exam;
+    }
+
+    public void setExam(MultipartFile exam) {
+        this.exam = exam;
+    }
 }

@@ -9,6 +9,7 @@ import LearnMore.security.web.WebContext;
 import LearnMore.service.UserService;
 import LearnMore.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -55,11 +56,11 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    @IgnoreSecurity
-    public Response login(@RequestParam("username")String username,@RequestParam("password")String password, HttpServletResponse httpServletResponse){
-        CommonUser user=new CommonUser();
-        user.setUsername(username);
-        user.setPassword(password);
+    @IgnoreSecurity//@RequestParam("username")String username,@RequestParam("password")String password
+    public Response login(@RequestBody CommonUser user, HttpServletResponse httpServletResponse){
+//        CommonUser user=new CommonUser();
+//        user.setUsername(username);
+//        user.setPassword(password);
         CommonUser checkedUser=userService.checkUserPassword(user);
         if (checkedUser!=null){
             String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie

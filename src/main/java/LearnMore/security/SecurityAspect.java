@@ -9,6 +9,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import java.lang.reflect.Method;
 
 /**
@@ -52,6 +53,12 @@ public class SecurityAspect {
         }
         // 从 request header 中获取当前 token
         String token = WebContext.getRequest().getHeader(tokenName);
+//        for (Cookie c:WebContext.getRequest().getCookies()){//todo 这样写可以免除前端发送消息时要附带header（需要开启cors中的携带cookie），但是在小白那里测试时发现request的cookie和response的cookie有区别。要找出原因
+//            if (c.getName().equals(tokenName)){
+//                boolean res=tokenManager.checkToken(c.getValue());
+//            }
+//        }
+
         // 检查 token 有效性
         if (!tokenManager.checkToken(token)) {
             String message = String.format("token [%s] is invalid", token);
