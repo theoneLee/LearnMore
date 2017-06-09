@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface CourseDao extends JpaRepository<Course,Long>{
     Course findByCourseName(String name);
 
-    @Query("select c from Course c join fetch c.courseContentList where c.courseName=?1")
+    @Query("select c from Course c left join fetch c.courseContentList where c.courseName=?1")
     Course findByCourseNameFetchCourseContentList(String name);
 
     /**
