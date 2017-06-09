@@ -22,8 +22,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private UserDao userDao;
 
-    //@Autowired
-    //private MessageQueueDao messageQueueDao;
 
     @Override
     public void sendMessage(String senderName, String receiverName, String content) {
