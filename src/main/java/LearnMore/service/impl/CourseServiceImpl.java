@@ -76,6 +76,11 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    public Course getCourseByNameFetchCourseContentList(String courseName) {
+        return courseDao.findByCourseNameFetchCourseContentList(courseName);
+    }
+
+    @Override
     public Course getCourseByName(String courseName) {
 
         return courseDao.findByCourseName(courseName);
@@ -111,6 +116,11 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public Course getCourseById(Integer id) {
         return courseDao.findById(id);
+    }
+
+    @Override
+    public Course getCourseByIdFetchExam(Integer id){
+        return courseDao.findByIdFetchExam(id);
     }
 
     @Override

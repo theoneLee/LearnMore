@@ -10,6 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface CourseDao extends JpaRepository<Course,Long>{
     Course findByCourseName(String name);
 
+    @Query("select c from Course c join fetch c.courseContentList where c.courseName=?1")
+    Course findByCourseNameFetchCourseContentList(String name);
+
     /**
      * 查找Course（携带exam）
      * @param name
@@ -17,6 +20,13 @@ public interface CourseDao extends JpaRepository<Course,Long>{
      */
     @Query("select c from Course c join fetch c.courseExamJson where c.courseName=?1")
     Course findByCourseNameFetchExam(String name);
+
+    /**
+     * 查找Course（携带exam）
+     * @return
+     */
+    @Query("select c from Course c join fetch c.courseExamJson where c.id=?1")
+    Course findByIdFetchExam(Integer id);
 
     Course findById(Integer id);
 

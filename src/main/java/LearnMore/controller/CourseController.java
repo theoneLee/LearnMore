@@ -8,10 +8,15 @@ import LearnMore.security.CheckPermission;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,8 +44,9 @@ public class CourseController {
 
 
     @RequestMapping(value = "/course/save",method = RequestMethod.POST)//这里要验证token和permission
-    //@CheckPermission
-    public Response getFormData(@RequestBody CourseWrapper courseWrapper)throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
+    //@IgnoreSecurity//测试需要，需要小白的html https://my.oschina.net/u/1020238/blog/528607
+    @CheckPermission
+    public Response getFormData(CourseWrapper courseWrapper)throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         //这里只处理课程基本信息
         // 文件通过Question模版转化为json，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
         List<Question> examJson=courseService.getJson(courseWrapper.getExam());
@@ -53,6 +59,31 @@ public class CourseController {
 
         courseService.save(course);
         return new Response().success();
+    }
+    @PostMapping("/course/save/test")
+    public void getFormDataTest()throws IOException{
+        CourseWrapper wrapper=new CourseWrapper();
+        wrapper.setCourseName("CourseName2");
+        wrapper.setCourseIntroduction("Introduction2");
+        wrapper.setCourseOutline("CourseOutline2");
+        wrapper.setTeacherTeam("TeacherTeam2");
+        List<Question> examJson=new ArrayList<>();
+        for (int i=0;i<10;i++){
+            Question q=new Question();
+            q.setNumber(i);
+            q.setTitle("title"+i);
+            q.setAnswer("answer"+i);
+            examJson.add(q);
+        }
+
+        Course course=new Course();
+        course.setCourseName(wrapper.getCourseName());
+        course.setTeacherTeam(wrapper.getTeacherTeam());
+        course.setCourseIntroduction(wrapper.getCourseIntroduction());
+        course.setCourseOutline(wrapper.getCourseOutline());
+        course.setCourseExamJson(examJson);
+
+        courseService.save(course);
     }
 
     /**
@@ -75,22 +106,25 @@ public class CourseController {
                                 @RequestParam("exam") MultipartFile exam,
                                 @PathVariable(name = "id")Integer id) throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         List<Question> examJson=courseService.getJson(exam);
-        Course course=courseService.getCourseById(id);
+        Course course=courseService.getCourseByIdFetchExam(id);
         course.setCourseName(courseName);
         course.setTeacherTeam(teacherTeam);
         course.setCourseIntroduction(courseIntroduction);
         course.setCourseOutline(courseOutline);
-        course.setCourseExamJson(examJson);
+        course.getCourseExamJson().clear();//清掉原来的数据
+        List<Question> courseCourseExam=course.getCourseExamJson();
+        courseCourseExam.addAll(examJson);//重新添加题目
 
         courseService.save(course);
         return new Response().success();
     }
 
-//    @RequestMapping(value ="/update/{id}",method = RequestMethod.GET)
-//    public Response getFormData(@PathVariable(name = "id")Integer id){
-//        Course course=courseService.getCourseById(id);
-//        return new Response().success(course);
-//    }
+    @PostMapping("/course/update/{id}/test")
+    public void updateFormDataTest(@PathVariable(name = "id")Integer id){
+
+
+    }
+
 
     @RequestMapping(value = "/course/delete/{id}",method = RequestMethod.GET)
     @CheckPermission

@@ -19,7 +19,7 @@ public interface CourseService {
 
     String getLinkByVideo(MultipartFile data,String courseContentName) throws IOException;//获取视频的保存路径
 
-    
+    Course getCourseByNameFetchCourseContentList(String courseName);
     
     Course getCourseByName(String courseName);
 
@@ -34,6 +34,7 @@ public interface CourseService {
     List<Course> getAllCourse();
 
     Course getCourseById(Integer id);
+    Course getCourseByIdFetchExam(Integer id);
 
     void deleteCourseById(Integer id);
 
