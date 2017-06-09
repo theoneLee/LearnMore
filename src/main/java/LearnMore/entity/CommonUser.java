@@ -19,8 +19,11 @@ public class CommonUser {
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<CourseDetail> courseDetailList=new ArrayList<>();//todo 该字段用来给学生选择课程，以及登记考试后的课程分数
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private MessageQueue messageQueue;//todo 私信模块
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<Message> messageList=new ArrayList<>();
+
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private List<Flag> flagList=new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -62,12 +65,19 @@ public class CommonUser {
         this.courseDetailList = courseDetailList;
     }
 
-    public MessageQueue getMessageQueue() {
-        return messageQueue;
+    public List<Message> getMessageList() {
+        return messageList;
     }
 
-    public void setMessageQueue(MessageQueue messageQueue) {
-        this.messageQueue = messageQueue;
+    public void setMessageList(List<Message> messageList) {
+        this.messageList = messageList;
     }
 
+    public List<Flag> getFlagList() {
+        return flagList;
+    }
+
+    public void setFlagList(List<Flag> flagList) {
+        this.flagList = flagList;
+    }
 }

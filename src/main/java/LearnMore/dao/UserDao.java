@@ -16,6 +16,16 @@ public interface UserDao extends JpaRepository<CommonUser,Long>{
     CommonUser findByUsernameFetchCourseDetail(String username);
 
 
-    @Query("select c from CommonUser c left join fetch c.messageQueue where c.username=?1")
-    CommonUser findByUsernameFetchMessageQueue(String username);
+
+
+//    @Query("select c from CommonUser c left join fetch c.messageQueue where c.username=?1")
+//    CommonUser findByUsernameFetchMessageQueue(String username);
+
+
+    //todo 加入messageList和flaglist的查询
+    @Query("select c from CommonUser c left join fetch c.messageList where c.username=?1")
+    CommonUser findByUsernameFetchMessageList(String senderName);
+
+    @Query("select c from CommonUser c left join fetch c.flagList where c.username=?1")
+    CommonUser findByUsernameFetchFlagList(String receiverName);
 }
