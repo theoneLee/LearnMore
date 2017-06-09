@@ -98,6 +98,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/courseDetail",method = RequestMethod.POST)
+    @IgnoreSecurity
     public Response addCourseDetail(@RequestParam(name = "userName")String username,@RequestParam(name = "courseName")String courseName){
         userService.addCourseDetail(username,courseName);
         return new Response().success();
