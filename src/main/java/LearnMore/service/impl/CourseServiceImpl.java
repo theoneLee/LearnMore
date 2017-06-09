@@ -92,9 +92,14 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseContent getCourseContentById(Integer id) {
-        Course c=courseDao.findById(id);
-        return courseContentDao.findByCourse(c);//todo 使用findByCourseQuery，看能不能join fetch
+    public CourseContent getCourseContentByccId(Integer ccid) {
+        return courseContentDao.findOne(ccid);
+    }
+
+    @Override
+    public List<CourseContent> getCourseContentListByCourse(String courseName) {
+        Course c=courseDao.findByCourseName(courseName);
+        return courseContentDao.findByCourse(c);
     }
 
     @Override

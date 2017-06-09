@@ -5,12 +5,14 @@ import LearnMore.entity.CourseContent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * Created by Lee on 2017/6/4 0004.
  */
-public interface CourseContentDao extends JpaRepository<CourseContent,Long>{
+public interface CourseContentDao extends JpaRepository<CourseContent,Integer>{
 
-    CourseContent findByCourse(Course course);
+    List<CourseContent> findByCourse(Course course);
 
     /**
      * 试试这样能不能查，不行就用上面那个查两次吧。

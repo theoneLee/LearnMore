@@ -1,5 +1,7 @@
 package LearnMore.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class CourseContent {
     private String courseContentName;//该视频内容名
     private String courseVideoLink;//保存教学视频的路径
 
-    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<Question> courseHomeWorkJson;//将上传的txt作业题目，解析成json然后存储在这里
 
 
@@ -33,6 +35,7 @@ public class CourseContent {
         this.courseContentName = courseContentName;
     }
 
+    @JsonBackReference//todo jackson无限序列化。http://blog.csdn.net/qdgengwenfei/article/details/51970865
     public Course getCourse() {
         return course;
     }
@@ -56,6 +59,7 @@ public class CourseContent {
     public void setCourseVideoLink(String courseVideoLink) {
         this.courseVideoLink = courseVideoLink;
     }
+
 
     public List<Question> getCourseHomeWorkJson() {
         return courseHomeWorkJson;

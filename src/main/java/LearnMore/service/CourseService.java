@@ -25,7 +25,8 @@ public interface CourseService {
 
     void save(Course course);
 
-    CourseContent getCourseContentById(Integer id);
+    CourseContent getCourseContentByccId(Integer id);
+    List<CourseContent> getCourseContentListByCourse(String courseName);
 
     List<CourseContent> getAllCourseContent();
 

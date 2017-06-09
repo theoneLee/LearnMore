@@ -75,7 +75,7 @@ public class CourseContentController {
     @RequestMapping(value = "/courseContent/{id}",method =RequestMethod.GET)
     @IgnoreSecurity
     public Response getCourseContentById(@PathVariable(name = "id")Integer id){
-        CourseContent courseContent=courseService.getCourseContentById(id);
+        CourseContent courseContent=courseService.getCourseContentByccId(id);
         return new Response().success(courseContent);
     }
 
@@ -83,6 +83,13 @@ public class CourseContentController {
     @IgnoreSecurity
     public Response getAllCourseContent(){
         List<CourseContent> list=courseService.getAllCourseContent();
+        return new Response().success(list);
+    }
+
+    @RequestMapping(value ="/courseContent/course/{courseName}",method =RequestMethod.GET)
+    @IgnoreSecurity
+    public Response getAllCourseContentByCourse(@PathVariable("courseName")String courseName){
+        List<CourseContent> list=courseService.getCourseContentListByCourse(courseName);
         return new Response().success(list);
     }
 
