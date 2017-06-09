@@ -44,7 +44,6 @@ public class CourseController {
 
 
     @RequestMapping(value = "/course/save",method = RequestMethod.POST)//这里要验证token和permission
-    //@IgnoreSecurity//测试需要，需要小白的html https://my.oschina.net/u/1020238/blog/528607
     @CheckPermission
     public Response getFormData(CourseWrapper courseWrapper)throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         //这里只处理课程基本信息

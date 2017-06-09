@@ -39,7 +39,6 @@ public class MessageController {
      * @return
      */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @IgnoreSecurity
     public Response getMessageList(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName){
         List<Message> rMessageList=messageService.getMessageList(senderName,receiverName);
         System.out.println(rMessageList);
@@ -52,7 +51,6 @@ public class MessageController {
 
 
     @RequestMapping(value = "/flag",method = RequestMethod.GET)
-    @IgnoreSecurity
     public Response getFlagList(@RequestParam(name = "receiver")String receiverName){
         List<Flag> flagList=messageService.getFlagList(receiverName);
         return new Response().success(flagList);
