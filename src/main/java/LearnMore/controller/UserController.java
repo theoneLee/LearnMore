@@ -3,6 +3,7 @@ package LearnMore.controller;
 import LearnMore.entity.CommonUser;
 import LearnMore.entity.CourseDetail;
 import LearnMore.entity.Response;
+import LearnMore.entity.wrapper.CommonUserWrapper;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.security.TokenManager;
 import LearnMore.security.web.WebContext;
@@ -34,8 +35,11 @@ public class UserController {//todo 登录，注销，修改密码，注册
 
     @RequestMapping(value = "/signin" ,method = RequestMethod.POST)
     @IgnoreSecurity
-    public Response signin(@RequestBody CommonUser user){
-        userService.signIn(user);
+    public Response signin(CommonUserWrapper user){
+        CommonUser user1=new CommonUser();
+        user1.setUsername(user.getUsername());
+        user1.setPassword(user.getPassword());
+        userService.signIn(user1);
         return new Response().success();
     }
 
@@ -57,11 +61,11 @@ public class UserController {//todo 登录，注销，修改密码，注册
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @IgnoreSecurity//@RequestParam("username")String username,@RequestParam("password")String password
-    public Response login(@RequestBody CommonUser user, HttpServletResponse httpServletResponse){
-//        CommonUser user=new CommonUser();
-//        user.setUsername(username);
-//        user.setPassword(password);
-        CommonUser checkedUser=userService.checkUserPassword(user);
+    public Response login(CommonUserWrapper user, HttpServletResponse httpServletResponse){
+        CommonUser user1=new CommonUser();
+        user.setUsername(user1.getUsername());
+        user.setPassword(user1.getPassword());
+        CommonUser checkedUser=userService.checkUserPassword(user1);
         if (checkedUser!=null){
             String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie
             Cookie tokenCookie=new Cookie(DEFAULT_TOKEN_NAME,token);
@@ -86,7 +90,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/courseDetailList",method = RequestMethod.GET)
-    public Response getCourseDetailList(@RequestParam(name = "userName")String username){
+    public Response getCourseDetailList(@RequestParam(name = "username")String username){
         List<CourseDetail> list=userService.getCourseDetailList(username);
         return new Response().success(list);
     }
@@ -98,7 +102,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/courseDetail",method = RequestMethod.POST)
-    public Response addCourseDetail(@RequestParam(name = "userName")String username,@RequestParam(name = "courseName")String courseName){
+    public Response addCourseDetail(@RequestParam(name = "username")String username,@RequestParam(name = "courseName")String courseName){
         userService.addCourseDetail(username,courseName);
         return new Response().success();
     }
