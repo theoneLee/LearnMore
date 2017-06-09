@@ -32,13 +32,20 @@ public class MessageServiceImpl implements MessageService {
         //根据senderName来找到User A,包装一个message，存储在user的MessageQueue中
         //根据receiverName找到User B，包装一个message，储存在user的messageQueue中，并且往B的messageQueue的Flag队列加入一个元素（提醒）
         CommonUser sender=userDao.findByUsername(senderName);
+        System.out.println(sender);
         MessageQueue messageQueueFetchMessageList=messageQueueDao.findByCommonUserFetchMessageList(sender);
+        System.out.println(messageQueueFetchMessageList);
         Message sMessage=new Message();
         sMessage.setReceiveUserName(receiverName);
         sMessage.setContent(content);
         sMessage.setDate(new Date());
-        messageQueueFetchMessageList.getMessageList().add(sMessage);
+        List<Message> messageList=messageQueueFetchMessageList.getMessageList();
+        if (messageList==null){
+            messageList=new ArrayList<>();
+        }
+        messageList.add(sMessage);
         messageQueueDao.save(messageQueueFetchMessageList);
+
 
         CommonUser receiver=userDao.findByUsername(receiverName);
         MessageQueue messageQueueFetchFlagList=messageQueueDao.findByCommonUserFetchFlagList(receiver);
@@ -47,8 +54,17 @@ public class MessageServiceImpl implements MessageService {
         rMessage.setReceiveUserName(senderName);
         rMessage.setContent(content);
         rMessage.setDate(new Date());
-        messageQueueFetchMessageList1.getMessageList().add(rMessage);
-        messageQueueFetchFlagList.getFlagList().add(new Flag(senderName));
+        List<Message> messageList1=messageQueueFetchMessageList1.getMessageList();
+        if (messageList1==null){
+            messageList1=new ArrayList<>();
+        }
+        messageList1.add(rMessage);
+        List<Flag> flagList=messageQueueFetchFlagList.getFlagList();
+        if (flagList==null){
+            flagList=new ArrayList<>();
+        }
+        flagList.add(new Flag(senderName));
+
         messageQueueDao.save(messageQueueFetchMessageList1);
         messageQueueDao.save(messageQueueFetchFlagList);
 

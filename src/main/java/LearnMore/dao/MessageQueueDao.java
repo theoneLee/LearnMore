@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface MessageQueueDao extends JpaRepository<MessageQueue,Long>{
 
-    @Query("select m from MessageQueue m join fetch m.flagList where m.commonUser=?1")
+    @Query("select m from MessageQueue m left join fetch m.flagList where m.commonUser=?1")
     MessageQueue findByCommonUserFetchFlagList(CommonUser receiver);
 
-    @Query("select m from MessageQueue m join fetch m.messageList where m.commonUser=?1")
+    @Query("select m from MessageQueue m left join fetch m.messageList where m.commonUser=?1")
     MessageQueue findByCommonUserFetchMessageList(CommonUser receiver);
 }

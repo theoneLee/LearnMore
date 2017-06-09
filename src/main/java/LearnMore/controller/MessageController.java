@@ -1,6 +1,7 @@
 package LearnMore.controller;
 
 import LearnMore.entity.*;
+import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.MessageService;
 import LearnMore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class MessageController {
     private MessageService messageService;
 
     @RequestMapping(value = "/send",method = RequestMethod.GET)
+    @IgnoreSecurity
     public Response sendMessage(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName,@RequestParam(name = "content")String content){
         //根据senderName来找到User A,包装一个message，存储在user的MessageQueue中
         //根据receiverName找到User B，包装一个message，储存在user的messageQueue中，并且往B的messageQueue的Flag队列加入一个元素（提醒）
