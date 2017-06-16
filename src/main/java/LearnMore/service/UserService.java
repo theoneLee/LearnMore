@@ -23,16 +23,20 @@ public class UserService {
         userDao.save(user);
     }
 
-    public CommonUser checkUserPassword(CommonUser user) {
+    public CommonUser checkUserPassword(CommonUser user) throws Exception{
         String formName=user.getUsername();
         String formPassword=user.getPassword();
 
         CommonUser userDb=userDao.findByUsername(formName);
+        if (userDb==null){
+            throw new Exception("username_no_exist");
+        }
         String truePassword=userDb.getPassword();
-        if (truePassword!=null&&truePassword.equals(formPassword)){
+
+        if (truePassword.equals(formPassword)){
             return userDb;
         }
-        return null;
+        throw new Exception("password_incorrect");
     }
 
 

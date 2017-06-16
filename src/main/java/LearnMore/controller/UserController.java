@@ -66,7 +66,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
     //@RequestParam("username")String username,@RequestParam("password")String password
     @CrossOrigin
     @IgnoreSecurity
-    public Response login(CommonUserWrapper user, HttpServletResponse httpServletResponse){
+    public Response login(CommonUserWrapper user, HttpServletResponse httpServletResponse)throws Exception{
         CommonUser user1=new CommonUser();
         user1.setUsername(user.getUsername());
         user1.setPassword(user.getPassword());
