@@ -5,10 +5,7 @@ import LearnMore.security.IgnoreSecurity;
 import LearnMore.service.MessageService;
 import LearnMore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,8 @@ public class MessageController {
     private MessageService messageService;
 
     @RequestMapping(value = "/send",method = RequestMethod.GET)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response sendMessage(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName,@RequestParam(name = "content")String content){
         messageService.sendMessage(senderName,receiverName,content);
         return new Response().success();
@@ -39,6 +38,8 @@ public class MessageController {
      * @return
      */
     @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response getMessageList(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName){
         List<Message> rMessageList=messageService.getMessageList(senderName,receiverName);
         System.out.println(rMessageList);
@@ -51,6 +52,8 @@ public class MessageController {
 
 
     @RequestMapping(value = "/flag",method = RequestMethod.GET)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response getFlagList(@RequestParam(name = "receiver")String receiverName){
         List<Flag> flagList=messageService.getFlagList(receiverName);
         return new Response().success(flagList);

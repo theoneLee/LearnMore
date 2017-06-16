@@ -17,15 +17,15 @@ import java.util.List;
  * todo 设置allowOrigin为前端所属的origin即可解决cors问题
  * Created by Lee on 2017/5/7 0007.
  */
-@WebFilter(
-        urlPatterns = "/*",
-        initParams = {
-                @WebInitParam(name = "allowOrigin",value = "test.lee.com"),//todo 当配置为*时，下面allowCredentials又是true时（允许请求携带cookie），该请求会失效 （但是自己测试时好像没这个问题） 参考http://netsecurity.51cto.com/art/201311/419179.htm
-                @WebInitParam(name = "allowMethods",value = "GET,POST,PUT,DELETE,OPTIONS"),
-                @WebInitParam(name = "allowCredentials",value = "true"),
-                @WebInitParam(name = "allowHeaders",value = "Content-Type,X-Token,X-Permission")
-        }
-)
+//@WebFilter(
+//        urlPatterns = "/*",
+//        initParams = {
+//                @WebInitParam(name = "allowOrigin",value = "*"),//todo 当配置为*时，下面allowCredentials又是true时（允许请求携带cookie），该请求会失效 （但是自己测试时好像没这个问题） 参考http://netsecurity.51cto.com/art/201311/419179.htm
+//                @WebInitParam(name = "allowMethods",value = "GET,POST,PUT,DELETE,OPTIONS"),
+//                @WebInitParam(name = "allowCredentials",value = "true"),
+//                @WebInitParam(name = "allowHeaders",value = "Content-Type,X-Token,X-Permission")
+//        }
+//)
 public class CorsFilter implements Filter {
 
     private String allowOrigin;

@@ -26,7 +26,9 @@ public class CourseContentController {
     private CourseService courseService;
 
     @RequestMapping(value = "/courseContent/save",method = RequestMethod.POST)
-    @CheckPermission
+    //@CheckPermission
+    @IgnoreSecurity
+    @CrossOrigin
     public Response addCourseContent(CourseContentWrapper courseContentWrapper)throws IOException {
         //接受表单的字段，还有接受表单包含的文件(第一个是视频内容，第二个是作业)
         //字段，文件的每一道题目通过Question模版转化，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
@@ -49,6 +51,8 @@ public class CourseContentController {
     }
 
     @PostMapping("/courseContent/save/test")
+    @IgnoreSecurity
+    @CrossOrigin
     public void addCourseContentTest(){
         List<Question> homeworkJson=new ArrayList<>();
         for (int i=0;i<2;i++){
@@ -58,7 +62,7 @@ public class CourseContentController {
             q.setAnswer("answer"+i);
             homeworkJson.add(q);
         }
-        String videoLink="/vedio/homework.mp4";
+        String videoLink="/video/homework.mp4";
         CourseContent courseContent=new CourseContent();//封装
         courseContent.setCourseContentName("CourseName1");
         courseContent.setCourseVideoLink(videoLink);
@@ -74,6 +78,7 @@ public class CourseContentController {
 
     @RequestMapping(value = "/courseContent/{id}",method =RequestMethod.GET)
     @IgnoreSecurity
+    @CrossOrigin
     public Response getCourseContentById(@PathVariable(name = "id")Integer id){
         CourseContent courseContent=courseService.getCourseContentByccId(id);
         return new Response().success(courseContent);
@@ -81,6 +86,7 @@ public class CourseContentController {
 
     @RequestMapping(value ="/courseContent",method =RequestMethod.GET)
     @IgnoreSecurity
+    @CrossOrigin
     public Response getAllCourseContent(){
         List<CourseContent> list=courseService.getAllCourseContent();
         return new Response().success(list);
@@ -88,13 +94,16 @@ public class CourseContentController {
 
     @RequestMapping(value ="/courseContent/course/{courseName}",method =RequestMethod.GET)
     @IgnoreSecurity
+    @CrossOrigin
     public Response getAllCourseContentByCourse(@PathVariable("courseName")String courseName){
         List<CourseContent> list=courseService.getCourseContentListByCourse(courseName);
         return new Response().success(list);
     }
 
     @RequestMapping(value = "/courseContent/delete/{id}",method = RequestMethod.GET)
-    @CheckPermission
+    //@CheckPermission
+    @CrossOrigin
+    @IgnoreSecurity
     public Response deleteCourseContentById(@PathVariable(name = "id")Integer id){
         courseService.deleteCourseContentById(id);
         return new Response().success();

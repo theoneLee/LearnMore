@@ -29,14 +29,17 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @RequestMapping(value = "/course",method = RequestMethod.GET)
+    @RequestMapping(value = "/course",method = RequestMethod.GET,produces = "application/json")
     @IgnoreSecurity
+    @CrossOrigin
     public Response getAllCourse(){
         List<Course> list=courseService.getAllCourse();
+        //System.out.println("courseList:"+list.get(0).getCourseContentList());
         return new Response().success(list);
     }
-    @RequestMapping(value = "/course/{id}",method =RequestMethod.GET)
+    @RequestMapping(value = "/course/{id}",method =RequestMethod.GET,produces = "application/json")
     @IgnoreSecurity
+    @CrossOrigin
     public Response getCourseById(@PathVariable(name = "id")Integer id){
         Course course=courseService.getCourseById(id);
         return new Response().success(course);
@@ -44,7 +47,9 @@ public class CourseController {
 
 
     @RequestMapping(value = "/course/save",method = RequestMethod.POST)//这里要验证token和permission
-    @CheckPermission
+    //@CheckPermission
+    @IgnoreSecurity
+    @CrossOrigin
     public Response getFormData(CourseWrapper courseWrapper)throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         //这里只处理课程基本信息
         // 文件通过Question模版转化为json，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
@@ -60,6 +65,8 @@ public class CourseController {
         return new Response().success();
     }
     @PostMapping("/course/save/test")
+    @IgnoreSecurity
+    @CrossOrigin
     public void getFormDataTest()throws IOException{
         CourseWrapper wrapper=new CourseWrapper();
         wrapper.setCourseName("CourseName2");
@@ -97,7 +104,9 @@ public class CourseController {
      * @return
      */
     @RequestMapping(value = "/course/update/{id}",method = RequestMethod.POST)//这里要验证token和permission
-    @CheckPermission
+    //@CheckPermission
+    @IgnoreSecurity
+    @CrossOrigin
     public Response updateFormData(@RequestParam("courseName")String courseName,
                                 @RequestParam("teacherTeam")String teacherTeam,
                                 @RequestParam("courseIntroduction")String courseIntroduction,
@@ -126,7 +135,9 @@ public class CourseController {
 
 
     @RequestMapping(value = "/course/delete/{id}",method = RequestMethod.GET)
-    @CheckPermission
+    //@CheckPermission
+    @IgnoreSecurity
+    @CrossOrigin
     public Response deleteCourseById(@PathVariable(name = "id")Integer id){
         courseService.deleteCourseById(id);
         return new Response().success();

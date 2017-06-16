@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by Lee on 2017/5/17 0017.
  */
 @Configuration
-@ServletComponentScan(basePackageClasses = {WebContextFilter.class,CorsFilter.class})//扫描filter，servlet，listener组件，会将其自动注册（使其可用）
+@ServletComponentScan(basePackageClasses = {WebContextFilter.class})//扫描filter，servlet，listener组件，会将其自动注册（使其可用）
 public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
 

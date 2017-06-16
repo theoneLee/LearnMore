@@ -35,6 +35,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
 
     @RequestMapping(value = "/signin" ,method = RequestMethod.POST)
     @IgnoreSecurity
+    @CrossOrigin
     public Response signin(CommonUserWrapper user){
         CommonUser user1=new CommonUser();
         user1.setUsername(user.getUsername());
@@ -48,6 +49,8 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response logout() {
         String token = WebContext.getRequest().getHeader(DEFAULT_TOKEN_NAME);
         tokenManager.removeToken(token);
@@ -61,10 +64,13 @@ public class UserController {//todo 登录，注销，修改密码，注册
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @IgnoreSecurity//@RequestParam("username")String username,@RequestParam("password")String password
+    @CrossOrigin
     public Response login(CommonUserWrapper user, HttpServletResponse httpServletResponse){
         CommonUser user1=new CommonUser();
         user.setUsername(user1.getUsername());
         user.setPassword(user1.getPassword());
+        System.out.println("password:"+user.getPassword());
+        System.out.println("username:"+user.getUsername());
         CommonUser checkedUser=userService.checkUserPassword(user1);
         if (checkedUser!=null){
             String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie
@@ -90,6 +96,8 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/courseDetailList",method = RequestMethod.GET)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response getCourseDetailList(@RequestParam(name = "username")String username){
         List<CourseDetail> list=userService.getCourseDetailList(username);
         return new Response().success(list);
@@ -102,9 +110,12 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/courseDetail",method = RequestMethod.POST)
+    @CrossOrigin
+    @IgnoreSecurity
     public Response addCourseDetail(@RequestParam(name = "username")String username,@RequestParam(name = "courseName")String courseName){
         userService.addCourseDetail(username,courseName);
         return new Response().success();
     }
+
 
 }

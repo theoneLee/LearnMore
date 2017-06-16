@@ -44,10 +44,10 @@
         </dependency>
 
         <!--mail-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-mail</artifactId>-->
+        <!--</dependency>-->
 
         <!--test-->
         <dependency>
@@ -55,6 +55,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!--devtools-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-devtools</artifactId>-->
+        <!--</dependency>-->
 
         <!--在这里导入依赖-->
         <!--apache common-->
@@ -110,4 +116,7 @@
 
     <!--jar打包-->
     <packaging>jar</packaging>
+
+
+
 </project>

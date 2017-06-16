@@ -49,4 +49,15 @@ public class UserService {
         user.getCourseDetailList().add(courseDetail);
         userDao.save(user);
     }
+
+    public void updateCourseDetailForExam(String userName, String courseName,String res) {
+        CommonUser user=userDao.findByUsernameFetchCourseDetail(userName);
+        for (CourseDetail c:user.getCourseDetailList()){
+            if ( c.getCourseName().equals(courseName)){
+                c.setScore(res);
+                break;
+            }
+        }
+        userDao.save(user);
+    }
 }

@@ -114,8 +114,12 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public List<Course> getAllCourse() {
-
-        return courseDao.findAll();
+        List<Course> list=courseDao.findAll();
+        for (Course course:list){
+            course.setCourseContentList(null);
+            course.setCourseExamJson(null);
+        }
+        return list;
     }
 
     @Override

@@ -7,8 +7,18 @@ import java.util.List;
  * Created by Lee on 2017/6/8 0008.
  */
 public class ExamParamWrapper {
+    private String userName;
     private String courseName;
     private List<String> optionList=new ArrayList<>();
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getCourseName() {
         return courseName;
