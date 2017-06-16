@@ -19,7 +19,11 @@ public class UserService {
 
 
 
-    public void signIn(CommonUser user) {
+    public void signIn(CommonUser user) throws Exception{
+        CommonUser u=userDao.findByUsername(user.getUsername());
+        if (u!=null){
+            throw new Exception("signin_failure");
+        }
         userDao.save(user);
     }
 

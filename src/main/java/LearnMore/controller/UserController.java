@@ -36,7 +36,7 @@ public class UserController {//todo 登录，注销，修改密码，注册
     @RequestMapping(value = "/signin" ,method = RequestMethod.POST)
     @IgnoreSecurity
     @CrossOrigin
-    public Response signin(CommonUserWrapper user){
+    public Response signin(CommonUserWrapper user)throws Exception{
         CommonUser user1=new CommonUser();
         user1.setUsername(user.getUsername());
         user1.setPassword(user.getPassword());
