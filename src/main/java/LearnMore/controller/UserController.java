@@ -63,14 +63,14 @@ public class UserController {//todo 登录，注销，修改密码，注册
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    @IgnoreSecurity//@RequestParam("username")String username,@RequestParam("password")String password
+    //@RequestParam("username")String username,@RequestParam("password")String password
     @CrossOrigin
+    @IgnoreSecurity
     public Response login(CommonUserWrapper user, HttpServletResponse httpServletResponse){
         CommonUser user1=new CommonUser();
-        user.setUsername(user1.getUsername());
-        user.setPassword(user1.getPassword());
-        System.out.println("password:"+user.getPassword());
-        System.out.println("username:"+user.getUsername());
+        user1.setUsername(user.getUsername());
+        user1.setPassword(user.getPassword());
+
         CommonUser checkedUser=userService.checkUserPassword(user1);
         if (checkedUser!=null){
             String token=tokenManager.createToken(checkedUser.getUsername());//加入token到cookie
