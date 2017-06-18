@@ -40,4 +40,6 @@ public interface CourseService {
     void deleteCourseById(Integer id);
 
     String checkExamAndGetPoint(ExamParamWrapper wrapper);
+
+    void saveAdd(Course course)throws Exception;
 }

@@ -50,7 +50,7 @@ public class CourseController {
     //@CheckPermission
     @IgnoreSecurity
     @CrossOrigin
-    public Response getFormData(CourseWrapper courseWrapper)throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
+    public Response getFormData(CourseWrapper courseWrapper)throws Exception{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         //这里只处理课程基本信息
         // 文件通过Question模版转化为json，视频保存后返回一个路径 封装成courseContent,然后通过courseName来获取course，再做关联并持久化course
         List<Question> examJson=courseService.getJson(courseWrapper.getExam());
@@ -61,13 +61,13 @@ public class CourseController {
         course.setCourseOutline(courseWrapper.getCourseOutline());
         course.setCourseExamJson(examJson);
 
-        courseService.save(course);
+        courseService.saveAdd(course);
         return new Response().success();
     }
     @PostMapping("/course/save/test")
     @IgnoreSecurity
     @CrossOrigin
-    public void getFormDataTest()throws IOException{
+    public void getFormDataTest()throws Exception{
         CourseWrapper wrapper=new CourseWrapper();
         wrapper.setCourseName("CourseName2");
         wrapper.setCourseIntroduction("Introduction2");
@@ -89,7 +89,7 @@ public class CourseController {
         course.setCourseOutline(wrapper.getCourseOutline());
         course.setCourseExamJson(examJson);
 
-        courseService.save(course);
+        courseService.saveAdd(course);
     }
 
     /**
@@ -112,7 +112,7 @@ public class CourseController {
                                 @RequestParam("courseIntroduction")String courseIntroduction,
                                 @RequestParam("courseOutline")String courseOutline,
                                 @RequestParam("exam") MultipartFile exam,
-                                @PathVariable(name = "id")Integer id) throws IOException{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
+                                @PathVariable(name = "id")Integer id) throws Exception{//todo 课程基本信息和课程内容是分开提交的，类似于新闻分类和新闻那样子；在新建课程内容是可以选这个课程内容是属于那一个课程的
         List<Question> examJson=courseService.getJson(exam);
         Course course=courseService.getCourseByIdFetchExam(id);
         course.setCourseName(courseName);

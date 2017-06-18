@@ -87,7 +87,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void save(Course course) {
+    public void save(Course course){
         courseDao.save(course);
     }
 
@@ -153,5 +153,14 @@ public class CourseServiceImpl implements CourseService{
         double score=flag/trueList.size();
         return String.valueOf(score);
 
+    }
+
+    @Override
+    public void saveAdd(Course course) throws Exception {
+        Course temp=courseDao.findByCourseName(course.getCourseName());
+        if (temp!=null){
+            throw new Exception("add_course_failure");
+        }
+        courseDao.save(course);
     }
 }
