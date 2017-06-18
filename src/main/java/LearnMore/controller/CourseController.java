@@ -144,4 +144,11 @@ public class CourseController {
     }
 
 
+    @RequestMapping(value = "/course/name/{courseName}",method = RequestMethod.GET)
+    @IgnoreSecurity
+    @CrossOrigin
+    public Response getCourseByCourseName(@PathVariable(name = "courseName")String courseName){
+        Course course=courseService.getCourseByName(courseName);
+        return new Response().success(course);
+    }
 }
