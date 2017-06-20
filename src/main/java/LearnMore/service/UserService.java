@@ -3,8 +3,10 @@ package LearnMore.service;
 import LearnMore.dao.UserDao;
 import LearnMore.entity.CommonUser;
 import LearnMore.entity.CourseDetail;
+import LearnMore.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.util.List;
 
@@ -68,4 +70,24 @@ public class UserService {
         }
         userDao.save(user);
     }
+
+    public void updatePassword(String username, String password, String newPassword,String newPassword1) throws Exception {
+        if (StringUtil.isEmpty(username)||StringUtil.isEmpty(password)||StringUtil.isEmpty(newPassword)){
+            throw new MissingServletRequestParameterException("required_parameter_is_not_present","String");
+        }
+        if (!newPassword.equals(newPassword1)){
+            throw new Exception("新密码两次输入没有相同");
+        }
+
+        CommonUser user=userDao.findByUsername(username);
+        System.out.println("数据库密码："+user.getPassword());
+        System.out.println("请求密码："+password);
+        if (user.getPassword().equals(password)){
+            throw new Exception("旧密码错误");
+        }
+        user.setPassword(newPassword);
+        userDao.save(user);
+    }
+
+
 }

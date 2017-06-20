@@ -4,6 +4,7 @@ import LearnMore.entity.CommonUser;
 import LearnMore.entity.CourseDetail;
 import LearnMore.entity.Response;
 import LearnMore.entity.wrapper.CommonUserWrapper;
+import LearnMore.entity.wrapper.UpdatePasswordWrapper;
 import LearnMore.security.IgnoreSecurity;
 import LearnMore.security.TokenManager;
 import LearnMore.security.web.WebContext;
@@ -117,5 +118,20 @@ public class UserController {//todo 登录，注销，修改密码，注册
         return new Response().success();
     }
 
+
+    /**
+     * 修改密码
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/updatePassword",method = RequestMethod.POST)
+    @IgnoreSecurity
+    @CrossOrigin
+    public Response updatePassword(UpdatePasswordWrapper wrapper) throws Exception {
+        userService.updatePassword(wrapper.getUsername(),wrapper.getPassword(),wrapper.getNewPassword(),wrapper.getNewPasswordChecked());
+        return new Response().success();
+    }
+
+    
 
 }

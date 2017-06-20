@@ -3,6 +3,7 @@ package LearnMore.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 /**
  * Created by Lee on 2017/6/7 0007.
@@ -14,6 +15,8 @@ public class CourseDetail {
     private Long id;
     private String courseName;
     private String score;
+//    @ManyToMany()
+//    private CommonUser user;
 
     public Long getId() {
         return id;
