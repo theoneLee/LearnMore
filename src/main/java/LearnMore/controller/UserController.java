@@ -132,6 +132,15 @@ public class UserController {//todo 登录，注销，修改密码，注册
         return new Response().success();
     }
 
+//    @RequestMapping(value = "/msg/{username}",method = RequestMethod.GET)
+//    @IgnoreSecurity
+//    @CrossOrigin
+//    public Response getUserByName(@PathVariable("username")String username){
+//        CommonUser user=userService.getUserByNameFetchMsg(username);
+//        user.setPassword(null);
+//        user.setPermission(null);
+//        return new Response().success(user);
+//    }
 
 
 }
