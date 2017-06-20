@@ -47,8 +47,17 @@ public class MessageServiceImpl implements MessageService {
         List<Message> messageList1=receiverMessage.getMessageList();
         messageList1.add(rMessage);
         List<Flag> flagList=receiverFlag.getFlagList();
-        flagList.add(new Flag(senderName));
-
+        //**********给receiver添加一个Flag（提示未读），并且sender同一段时间内连续发送多条消息，也不会往FlagList中添加多条，从而导致前端遍历这个队列会出现多个相同用户
+        boolean res=true;
+        for (Flag flag:flagList){
+            if (flag.getName().equals(senderName)){
+                res=false;
+            }
+        }
+        if (res){
+            flagList.add(new Flag(senderName));
+        }
+        //********
         userDao.save(receiverMessage);
         userDao.save(receiverFlag);
 
