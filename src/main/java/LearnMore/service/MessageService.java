@@ -17,4 +17,6 @@ public interface MessageService {
     List<Flag> getFlagList(String receiverName);
 
     List<Message> getMessageList(String senderName, String receiverName);
+
+    void clearFlagList(String senderName, String receiverName);
 }

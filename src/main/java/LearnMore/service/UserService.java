@@ -51,13 +51,19 @@ public class UserService {
         return user.getCourseDetailList();
     }
 
-    public void addCourseDetail(String username, String courseName) {
+    public void addCourseDetail(String username, String courseName) throws Exception {
         CommonUser user=userDao.findByUsernameFetchCourseDetail(username);
+        List<CourseDetail> list=user.getCourseDetailList();
+        for (CourseDetail c:list){
+            if (c.getCourseName().equals(courseName)){
+                throw new Exception("已经选修相同课程");
+            }
+        }
         CourseDetail courseDetail=new CourseDetail();
         courseDetail.setCourseName(courseName);
         courseDetail.setScore("未考试");
         courseDetail.setUser(user);
-        user.getCourseDetailList().add(courseDetail);
+        list.add(courseDetail);
         userDao.save(user);
     }
 

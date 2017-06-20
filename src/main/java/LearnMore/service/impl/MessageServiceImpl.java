@@ -30,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
         CommonUser sender=userDao.findByUsernameFetchMessageList(senderName);
         List<Message>messageList=sender.getMessageList();
         Message sMessage=new Message();
-//        sMessage.setReceiveUserName(receiverName);//不能写成这个。写了这个就是相当于一条消息有两个人
+//        sMessage.setReceiveUserName(receiverName);//不能写成这个。写了这个就是相当于给每一个人都给彼此发送一条消息
         sMessage.setReceiveUserName(senderName);
         sMessage.setContent(content);
         sMessage.setDate(new Date());
@@ -67,7 +67,7 @@ public class MessageServiceImpl implements MessageService {
         List<Message> list=receiver.getMessageList();
         List<Message> res=new ArrayList<>();
         for (Message m:list) {
-            System.out.println(m.getReceiveUserName());
+            //System.out.println(m.getReceiveUserName());
             if (m.getReceiveUserName().equals(senderName)){
                 res.add(m);
             }
@@ -77,7 +77,19 @@ public class MessageServiceImpl implements MessageService {
         }
 //        res.remove(res.size()-1);
         return res;
+    }
 
-
+    @Override
+    public void clearFlagList(String senderName, String receiverName) {
+        //清除receiver的flagList队列的sender
+        CommonUser receiver=userDao.findByUsernameFetchFlagList(receiverName);
+        List<Flag> flagList=receiver.getFlagList();
+        for (Flag flag:flagList){
+            if (flag.getName().equals(senderName)){
+                flagList.remove(flag);
+                break;
+            }
+        }
+        userDao.save(receiver);
     }
 }

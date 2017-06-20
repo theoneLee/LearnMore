@@ -113,7 +113,8 @@ public class UserController {//todo 登录，注销，修改密码，注册
     @RequestMapping(value = "/courseDetail",method = RequestMethod.POST)
     @CrossOrigin
     @IgnoreSecurity
-    public Response addCourseDetail(@RequestParam(name = "username")String username,@RequestParam(name = "courseName")String courseName){
+    public Response addCourseDetail(@RequestParam(name = "username")String username,
+                                    @RequestParam(name = "courseName")String courseName) throws Exception {
         userService.addCourseDetail(username,courseName);
         return new Response().success();
     }

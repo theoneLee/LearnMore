@@ -64,7 +64,7 @@ public class MessageController {
     @IgnoreSecurity
     @CrossOrigin
     public Response clearFlagList(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName){
-        //messageService.clearFlagList()
-        return null;
+        messageService.clearFlagList(senderName,receiverName);
+        return new Response().success();
     }
 }
