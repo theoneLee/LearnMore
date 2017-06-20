@@ -2,9 +2,8 @@ package LearnMore.service.impl;
 
 import LearnMore.dao.CourseContentDao;
 import LearnMore.dao.CourseDao;
-import LearnMore.entity.Course;
-import LearnMore.entity.CourseContent;
-import LearnMore.entity.Question;
+import LearnMore.dao.CourseDetailDao;
+import LearnMore.entity.*;
 import LearnMore.entity.wrapper.ExamParamWrapper;
 import LearnMore.service.CourseService;
 import org.apache.commons.io.FileUtils;
@@ -23,10 +22,13 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService{
 
     @Autowired
-    CourseDao courseDao;
+    private CourseDao courseDao;
 
     @Autowired
-    CourseContentDao courseContentDao;
+    private CourseDetailDao courseDetailDao;
+
+    @Autowired
+    private CourseContentDao courseContentDao;
 
     @Override
     public List<Question> getJson(MultipartFile data) throws IOException{
@@ -162,5 +164,16 @@ public class CourseServiceImpl implements CourseService{
             throw new Exception("add_course_failure");
         }
         courseDao.save(course);
+    }
+
+    @Override
+    public List<String> getCourUserListByCourseName(String courseName) {
+        List<CourseDetail> list=courseDetailDao.findByCourseName(courseName);
+        List<String> res=new ArrayList<>();
+        for (CourseDetail c:list){
+            CommonUser user=c.getUser();
+            res.add(user.getUsername());
+        }
+        return res;
     }
 }

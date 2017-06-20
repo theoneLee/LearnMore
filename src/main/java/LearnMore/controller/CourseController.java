@@ -3,6 +3,7 @@ package LearnMore.controller;
 import LearnMore.entity.Course;
 import LearnMore.entity.Question;
 import LearnMore.entity.Response;
+import LearnMore.entity.wrapper.CommonUserWrapper;
 import LearnMore.entity.wrapper.CourseWrapper;
 import LearnMore.security.CheckPermission;
 import LearnMore.security.IgnoreSecurity;
@@ -150,5 +151,13 @@ public class CourseController {
     public Response getCourseByCourseName(@PathVariable(name = "courseName")String courseName){
         Course course=courseService.getCourseByName(courseName);
         return new Response().success(course);
+    }
+
+
+    @RequestMapping(value = "/course/userList",method = RequestMethod.GET)
+    public Response getCourseUserListByCourseName(String courseName){
+        List<String> list=courseService.getCourUserListByCourseName(courseName);
+
+        return new Response().success(list);
     }
 }

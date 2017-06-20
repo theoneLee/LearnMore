@@ -1,9 +1,6 @@
 package LearnMore.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 /**
  * Created by Lee on 2017/6/7 0007.
@@ -15,8 +12,9 @@ public class CourseDetail {
     private Long id;
     private String courseName;
     private String score;
-//    @ManyToMany()
-//    private CommonUser user;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "user_id")
+    private CommonUser user;
 
     public Long getId() {
         return id;
@@ -40,5 +38,13 @@ public class CourseDetail {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public CommonUser getUser() {
+        return user;
+    }
+
+    public void setUser(CommonUser user) {
+        this.user = user;
     }
 }
