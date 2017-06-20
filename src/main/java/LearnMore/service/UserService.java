@@ -56,6 +56,7 @@ public class UserService {
         CourseDetail courseDetail=new CourseDetail();
         courseDetail.setCourseName(courseName);
         courseDetail.setScore("未考试");
+        courseDetail.setUser(user);
         user.getCourseDetailList().add(courseDetail);
         userDao.save(user);
     }

@@ -30,7 +30,8 @@ public class MessageServiceImpl implements MessageService {
         CommonUser sender=userDao.findByUsernameFetchMessageList(senderName);
         List<Message>messageList=sender.getMessageList();
         Message sMessage=new Message();
-        sMessage.setReceiveUserName(receiverName);
+//        sMessage.setReceiveUserName(receiverName);//不能写成这个。写了这个就是相当于一条消息有两个人
+        sMessage.setReceiveUserName(senderName);
         sMessage.setContent(content);
         sMessage.setDate(new Date());
         messageList.add(sMessage);
@@ -62,13 +63,21 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> getMessageList(String senderName, String receiverName) {
         CommonUser receiver=userDao.findByUsernameFetchMessageList(receiverName);
+
         List<Message> list=receiver.getMessageList();
         List<Message> res=new ArrayList<>();
         for (Message m:list) {
+            System.out.println(m.getReceiveUserName());
             if (m.getReceiveUserName().equals(senderName)){
                 res.add(m);
             }
+            if (m.getReceiveUserName().equals(receiverName)){
+                res.add(m);
+            }
         }
+//        res.remove(res.size()-1);
         return res;
+
+
     }
 }

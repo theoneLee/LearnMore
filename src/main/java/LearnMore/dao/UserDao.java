@@ -22,8 +22,8 @@ public interface UserDao extends JpaRepository<CommonUser,Long>{
 //    CommonUser findByUsernameFetchMessageQueue(String username);
 
 
-    //todo 加入messageList和flaglist的查询
-    @Query("select c from CommonUser c left join fetch c.messageList where c.username=?1")
+    //c.messageList.date可以使用
+    @Query("select c from CommonUser c left join fetch c.messageList where c.username=?1 order by c.messageList.date asc ")
     CommonUser findByUsernameFetchMessageList(String senderName);
 
     @Query("select c from CommonUser c left join fetch c.flagList where c.username=?1")

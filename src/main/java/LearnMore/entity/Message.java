@@ -14,9 +14,18 @@ public class Message {
     @GeneratedValue
     private Long id;
 
+//    private String sendUserName;
     private String receiveUserName;
     private String content;
     private Date date;
+
+//    public String getSendUserName() {
+//        return sendUserName;
+//    }
+//
+//    public void setSendUserName(String sendUserName) {
+//        this.sendUserName = sendUserName;
+//    }
 
     public Long getId() {
         return id;

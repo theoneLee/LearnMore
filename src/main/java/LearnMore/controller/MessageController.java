@@ -42,7 +42,7 @@ public class MessageController {
     @IgnoreSecurity
     public Response getMessageList(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName){
         List<Message> rMessageList=messageService.getMessageList(senderName,receiverName);
-        System.out.println(rMessageList);
+        //System.out.println(rMessageList);
         if (rMessageList==null){
             return new Response().success("no message");
         }
@@ -59,4 +59,12 @@ public class MessageController {
         return new Response().success(flagList);
     }
 
+
+    @RequestMapping(value = "/flag/clear",method = RequestMethod.GET)
+    @IgnoreSecurity
+    @CrossOrigin
+    public Response clearFlagList(@RequestParam(name = "sender")String senderName,@RequestParam(name = "receiver")String receiverName){
+        //messageService.clearFlagList()
+        return null;
+    }
 }
