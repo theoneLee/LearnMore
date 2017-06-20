@@ -1,5 +1,7 @@
 package LearnMore.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -40,6 +42,7 @@ public class CourseDetail {
         this.score = score;
     }
 
+    @JsonBackReference//todo jackson无限序列化。因为jackson默认序列化时是eager
     public CommonUser getUser() {
         return user;
     }

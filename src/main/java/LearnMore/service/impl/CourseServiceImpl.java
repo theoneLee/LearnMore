@@ -141,6 +141,7 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public String checkExamAndGetPoint(ExamParamWrapper wrapper) {
+        System.out.println("执行函数checkExamAndGetPoint");
         Course course=courseDao.findByCourseNameFetchExam(wrapper.getCourseName());
         List<Question> trueList=course.getCourseExamJson();
         List<String> optionList=wrapper.getOptionList();

@@ -80,8 +80,6 @@ public class UserService {
         }
 
         CommonUser user=userDao.findByUsername(username);
-        //System.out.println("数据库密码："+user.getPassword());
-        //System.out.println("请求密码："+password);
         if (!password.equals(user.getPassword())){
             throw new Exception("旧密码错误");
         }

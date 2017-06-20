@@ -128,8 +128,6 @@ public class UserController {//todo 登录，注销，修改密码，注册
     @IgnoreSecurity
     @CrossOrigin
     public Response updatePassword(UpdatePasswordWrapper wrapper) throws Exception {
-        //System.out.println("请求密码c："+wrapper.getPassword());
-        //System.out.println("新密码："+wrapper.getNewPassword());
         userService.updatePassword(wrapper.getUsername(),wrapper.getPassword(),wrapper.getNewPassword(),wrapper.getNewPasswordChecked());
         return new Response().success();
     }

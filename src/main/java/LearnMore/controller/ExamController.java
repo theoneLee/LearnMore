@@ -26,8 +26,10 @@ public class ExamController {
     @RequestMapping(value = "/post",method = RequestMethod.POST)
     @CrossOrigin
     @IgnoreSecurity
-    public Response getExamOptionList(@RequestBody ExamParamWrapper wrapper){
+    public Response getExamOptionList(ExamParamWrapper wrapper){
         //拿到选项队列，然后直接和正确答案做比较，再根据正确个数/全部个数*100得到总分
+        System.out.println("username："+wrapper.getUserName());
+        System.out.println("长度："+wrapper.getOptionList());
         String res=courseService.checkExamAndGetPoint(wrapper);
         userService.updateCourseDetailForExam(wrapper.getUserName(),wrapper.getCourseName(),res);//更新该用户的课程成绩
         return new Response().success(res);

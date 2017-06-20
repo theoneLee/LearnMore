@@ -1,6 +1,5 @@
 package LearnMore.dao;
 
-import LearnMore.entity.CommonUser;
 import LearnMore.entity.CourseDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 

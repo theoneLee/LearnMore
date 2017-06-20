@@ -154,7 +154,14 @@ public class CourseController {
     }
 
 
+    /**
+     * 找到修某一门课的全部成员名字
+     * @param courseName
+     * @return
+     */
     @RequestMapping(value = "/course/userList",method = RequestMethod.GET)
+    @IgnoreSecurity
+    @CrossOrigin
     public Response getCourseUserListByCourseName(String courseName){
         List<String> list=courseService.getCourUserListByCourseName(courseName);
 
