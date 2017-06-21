@@ -11,7 +11,6 @@ import LearnMore.security.web.WebContext;
 import LearnMore.service.UserService;
 import LearnMore.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;

@@ -72,7 +72,8 @@ public class CourseServiceImpl implements CourseService{
     public String getLinkByVideo(MultipartFile data,String courseContentName) throws IOException{
         //将视频文件保存在一个地方并返回访问该文件url路径
         //todo 这里可以考虑把视频编码处理下，做一下不影响视频质量的压缩
-        FileUtils.writeByteArrayToFile(new File("/video/"+data.getOriginalFilename()),data.getBytes());
+        System.out.println("视频："+data.getOriginalFilename());
+        FileUtils.writeByteArrayToFile(new File("target/classes/static/video/"+data.getOriginalFilename()),data.getBytes());
 
         return "/video/"+data.getOriginalFilename();
     }
