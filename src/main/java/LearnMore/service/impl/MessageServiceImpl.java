@@ -1,5 +1,6 @@
 package LearnMore.service.impl;
 
+import LearnMore.dao.FlagDao;
 import LearnMore.dao.UserDao;
 import LearnMore.entity.CommonUser;
 import LearnMore.entity.Flag;
@@ -22,20 +23,24 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private FlagDao flagDao;
+
 
     @Override
     public void sendMessage(String senderName, String receiverName, String content) {
         //根据senderName来找到User A,包装一个message，存储在user的MessageList中
         //根据receiverName找到User B，包装一个message，储存在user的MessageList中，并且往B的flagList加入一个元素（提醒）
-        CommonUser sender=userDao.findByUsernameFetchMessageList(senderName);
-        List<Message>messageList=sender.getMessageList();
+        CommonUser senderMessage=userDao.findByUsernameFetchMessageList(senderName);
+        List<Message>messageList=senderMessage.getMessageList();
         Message sMessage=new Message();
 //        sMessage.setReceiveUserName(receiverName);//不能写成这个。写了这个就是相当于给每一个人都给彼此发送一条消息
         sMessage.setReceiveUserName(senderName);
         sMessage.setContent(content);
         sMessage.setDate(new Date());
+        sMessage.setSenderUserName(receiverName);//为下面getMessageList提供便利
         messageList.add(sMessage);
-        userDao.save(sender);
+        userDao.save(senderMessage);
 
 
         CommonUser receiverMessage=userDao.findByUsernameFetchMessageList(receiverName);
@@ -57,7 +62,7 @@ public class MessageServiceImpl implements MessageService {
         if (res){
             flagList.add(new Flag(senderName));
         }
-        //********
+        //************************
         userDao.save(receiverMessage);
         userDao.save(receiverFlag);
 
@@ -80,11 +85,13 @@ public class MessageServiceImpl implements MessageService {
             if (m.getReceiveUserName().equals(senderName)){
                 res.add(m);
             }
-            if (m.getReceiveUserName().equals(receiverName)){
-                res.add(m);
+            if (m.getSenderUserName()!=null){
+                if (m.getSenderUserName().equals(senderName)&&m.getReceiveUserName().equals(receiverName)){//使发信者发的内容不会给其它用户也同样获取
+                    res.add(m);
+                }
             }
+
         }
-//        res.remove(res.size()-1);
         return res;
     }
 
@@ -92,13 +99,19 @@ public class MessageServiceImpl implements MessageService {
     public void clearFlagList(String senderName, String receiverName) {
         //清除receiver的flagList队列的sender
         CommonUser receiver=userDao.findByUsernameFetchFlagList(receiverName);
+        //Flag temp=null;
         List<Flag> flagList=receiver.getFlagList();
         for (Flag flag:flagList){
             if (flag.getName().equals(senderName)){
+                //temp=flag;
                 flagList.remove(flag);
                 break;
             }
         }
         userDao.save(receiver);
+//        if (temp!=null){//没有这个，不会删除数据库应该被清理的flag//设置级联detach
+//            flagDao.delete(temp);
+//        }
+
     }
 }

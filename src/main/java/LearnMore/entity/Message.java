@@ -1,8 +1,8 @@
 package LearnMore.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,18 +14,19 @@ public class Message {
     @GeneratedValue
     private Long id;
 
-//    private String sendUserName;
+    private String senderUserName;//这个字段用于发信者自己给自己发信息的时候才需要添加，使发信者发的内容不会给其它用户也同样获取
     private String receiveUserName;
     private String content;
     private Date date;
 
-//    public String getSendUserName() {
-//        return sendUserName;
-//    }
-//
-//    public void setSendUserName(String sendUserName) {
-//        this.sendUserName = sendUserName;
-//    }
+
+    public String getSenderUserName() {
+        return senderUserName;
+    }
+
+    public void setSenderUserName(String senderUserName) {
+        this.senderUserName = senderUserName;
+    }
 
     public Long getId() {
         return id;

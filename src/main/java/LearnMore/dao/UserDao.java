@@ -23,7 +23,7 @@ public interface UserDao extends JpaRepository<CommonUser,Long>{
 
 
     //c.messageList.date可以使用
-    @Query("select c from CommonUser c left join fetch c.messageList where c.username=?1 order by c.messageList.date asc ")
+    @Query("select c from CommonUser c left join fetch c.messageList where c.username=?1")
     CommonUser findByUsernameFetchMessageList(String senderName);
 
     @Query("select c from CommonUser c left join fetch c.flagList where c.username=?1")

@@ -22,7 +22,7 @@ public class CommonUser {
     @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private List<Message> messageList=new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE,CascadeType.DETACH},fetch = FetchType.LAZY)
     private List<Flag> flagList=new ArrayList<>();
 
     public Integer getId() {
